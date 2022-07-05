@@ -248,4 +248,19 @@ It is really interesting the result for `Reference + clear` where we register up
 
 ## Conclusion
 
-... in progress ...
+We have seen theory, we have seen some performances, now is time to do our evaluations.
+
+Something that I would like to avoid is that this reading will transfer the wrong message, so I would like to be clear or better crystalline:
+
+<<"All the optimizations behind the `copy-elision` are valuable and in the right context should be used.">>
+
+***Which is the right context, then?***
+
+It depends on the application, so it strongly depends on what we want to do and from expected results. This means that if our application are required to be as much faster as possible, then it is important to take in account results presented in this article and then try to optimize all functions that have a high calling rate and taking in account that what we have seen in this article just cover one simple functionality / optimization, but surely is not the only way to write high performing source code.
+
+Surely we cannot hope that the compiler will do the job on behalf of software engineers, the compiler cannot do any analysis to create the best algorithm or at least an algorithm with an optimum solution (not yet), as well as the compiler do not know which is the context of our application, if there are specific requirements to be satisfied that include execution time as well as memory usage. 
+
+The best practice should be to find out a rationale for all that we do and to understand that the first optimizer is the software engineer, not the compiler. The compiler will help for sure and will be able to perform hundreds of little optimizations as well as to detect "anomalies" raising warnings to be addressed and not be ignored.
+
+## Thanks for reading
+Hope you enjoyed this article, personally I had some fun writing it :D
