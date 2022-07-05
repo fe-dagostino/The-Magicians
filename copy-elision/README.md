@@ -154,9 +154,95 @@ First of all the compiler will detect all function like our [Function 1](#functi
 Second, in all occurrence, so whether such [Function 1](#function-1) is invoked the compiler will try to optimize the code and to avoid extra allocation, so coming back to [Use Case 1](#function-1---c-98---use-case-1) we will have only one call object that will be created and this object will match with the memory allocated in the `main()` function. This is a consistent improvement if compared to where we start with `3 x instances` + `2 x copy`.
 For the [Use Case 2](#function-1---c-98---use-case-2) we are not creating the object, instead we are using the assignment operator with an object that is already created, so in this case the compiler in order to avoid the copy of all elements in the local variable, and due to the fact that immediately after such object will be destroyed, will call automatically move all pointers and data from local object to the destination object, and then invalidate the local object. This means that in our specific case, where we have a vector, all its content will be moved to the destination object, so counters will be assigned, but allocated memory will just change ownership.
 
-
------ 
-still work in progress ....
+Well well, we saw something moving from "don't do that" moving to be the "convention" today presumably adopted by all, now that we have all theory, and hopeful it is enough clear for all readers, then it is time for some experiments.
 
 
+## Graph Time
 
+What we will do in this section will be to compare performances between different approaches we saw in the above, as for reference:
+- **RVO/NRVO** : *we create the conditions for RVO/NRVO optimization*
+- **Move Semantic** : *we create the conditions for the Move Semantic optimization*
+- **Reference + Create** : *create an object and then call the function passing object by reference*
+- **Reference + Clear** : *crate a global object and then then call the function passing object by reference, called function in this case perform a call to clear() to ensure initial status to empty.*
+
+All test will be perfomed using one of the latest compiler available and using the latest standard implemented today.
+
+In order to avoid different results due to different implementations on compilers, I executed some preliminary tests on three compilers (`gcc`, `clang`, `msvc`), but due to the fact that results are not affected by the compiler in fact the trend is the same for all of them, I just presented results obtained with `gcc` also for the fact that comparing the compilers and generated code is out of the scope of this article.
+
+*Only one note related to MSVC that I noticied and I will report here.*
+- *compiler `x64 MSVC v19.32`*
+- *compiler options `/std:c++20` and `/O2`*
+
+*If `/Ox` `/O1` or `/O2` is not specified, the compiler apply the `move-semantic` even when there are the conditions for RVO/NRVO and this have a minimum impact on performances. So, if you are using MSVC for your program, take care to enable optimizations. The behaviours for GCC and CLANG instead is the same in all conditions, so they both apply RVO/NRVO and `move-semantic` in the "correct" conditions.*
+
+The results presented in the two coming tests have been obtained with the following compiler: 
+- compiler `g++ 12.0.1`
+- options `-std=c++20` `-O3`
+
+Anyway, results can be replicated with other compilers.
+
+### Test 1 - *Constant calls with variable items*
+
+In this first test we are going to measure the time required to execute 1 Milion calls on the following two functions and increasing number of `items`.
+
+First iteration we have 1 Milion calls with `items = 1000`, then 1 Milion calls with `items = 2000` and so on up to `10000 items`.
+
+
+```cpp
+std::vector<int> get_vector_ce( int items ) noexcept  // _ce stand for Copy-Elision
+{
+  std::vector<int> out;
+
+  for ( auto i = 0; i < items; ++i )
+  {
+    out.push_back(i);
+  }
+
+  return out;
+}
+
+constexpr void get_vector_ref( int items, std::vector<int>& out ) noexcept // _ref stand for Reference
+{
+  out.clear();
+
+  for ( auto i = 0; i < items; ++i )
+  {
+    out.push_back(i);
+  }
+}
+```
+
+Here the results with two different views.
+
+|![](.resources/test_1_graph_1.png)|![](.resources/test_1_graph_2.png)|
+|--|--|
+
+From the graphics we can see that "Reference + Clear" increase linearly with the number of items, that is quite normal since we have more calls to `push_items()` for the vector, so internal loop inside the function.
+
+We should expect the same trend for `RVO/NRVO` and for the Move-Semantic, instead the graph show a non-linear trend. Moreover, from the same graph we can see that in general Move-Semantic and `RVO/NRVO` are very closer in terms of execution time, but as expected the `RVO/NRVO` has a bit better performance than the `Move-Semantic`.
+
+`Reference + Clear` result **45.45%** faster than `RVO/NRVO` and **45.85%** faster than `Move Semantic`.
+
+
+### Test 2 - *Constant items with variable calls*
+
+In this second test we are going to use a fixed number of `items`, and more specifically we are pushing only one single item in the vector, but this time we will increate number of calls to the function. 
+
+First iteration perform `10 Milion calls`, second iteration `20 Milion calls` and so on up to `100 Milion calls`.
+
+In this test we add also `Reference + Create` and for that we discussed in the first part of this article, we are expeting a perfect match with `RVO/NRVO` timing.
+
+Here the results with two different views.
+
+|![](.resources/test_2_graph_1.png)|![](.resources/test_2_graph_2.png)|
+|--|--|
+
+The first 3 lines are so closer and at least for RVO/NRVO and Move Semantic we have a confirmation on what we have seen also in [Test 1](#test-1---constant-calls-with-variable-items); The purple line related to `Reference + Create` show that we have some improvements increasing the number of calls:
+- up to **1.47%** better than `RVO/NRVO`
+- up to **3.24%** better than `Move-Semantic`.
+
+It is really interesting the result for `Reference + clear` where we register up to **94%** better performances compared to all other implementations. 
+
+## Conclusion
+
+... in progress ...
