@@ -243,6 +243,9 @@ The first 3 lines are so closer and at least for RVO/NRVO and Move Semantic we h
 
 It is really interesting the result for `Reference + clear` where we register up to **94%** better performances compared to all other implementations. 
 
+
+**Note**: *graph and related data available here [Performances.xlsx](.resources/performances.xlsx).*
+
 ## Conclusion
 
 ... in progress ...
