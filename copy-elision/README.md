@@ -263,4 +263,7 @@ Surely we cannot hope that the compiler will do the job on behalf of software en
 The best practice should be to find out a rationale for all that we do and to understand that the first optimizer is the software engineer, not the compiler. The compiler will help for sure and will be able to perform hundreds of little optimizations as well as to detect "anomalies" raising warnings to be addressed and not be ignored.
 
 ## Thanks for reading
+
+If you have 30 minutes of spare time, please do not miss to see this [video](https://youtu.be/hA1WNtNyNbo) with a talk on RVO presented by **Arthur O'DWYER** at [CppCon.org](https://cppcon.org/) 2018. 
+
 Hope you enjoyed this article, personally I had some fun writing it :D
