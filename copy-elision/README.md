@@ -1,6 +1,6 @@
 # [The-Magicians](../README.md): copy-elision
 
-Last update: 05 July 2022
+Last update: 07 July 2022
 
 To better understand what is the [*copy-elision*](https://en.cppreference.com/w/cpp/language/copy_elision) and all the benefits of such functionality we should go back in time, and more specifically before the introduction of [C++11](https://en.wikipedia.org/wiki/C++11) in which such optimization has been introduced for the first time together with the move semantic. The C++11 introduced significant changes in the standard but here we will focus on the move semantic and to the copy-elision functionality that where we will put all our attentions. In more recent standards, the *copy-elision* have been revisited in order to extend ranges of context where it can be applied from the compiler or when to use the move semantic instead. So for our discussion we have two specific moment in time, *before C++11* and *after C++11*.
 
