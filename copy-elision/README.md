@@ -183,9 +183,9 @@ Anyway, results can be replicated with other compilers.
 
 ### Test 1 - *Constant calls with variable items*
 
-In this first test we are going to measure the time required to execute 1 Milion calls on the following two functions and increasing number of `items`.
+In this first test we are going to measure the time required to execute 1 Million calls on the following two functions and increasing number of `items`.
 
-First iteration we have 1 Milion calls with `items = 1000`, then 1 Milion calls with `items = 2000` and so on up to `10000 items`.
+First iteration we have 1 Million calls with `items = 1000`, then 1 Million calls with `items = 2000` and so on up to `10000 items`.
 
 
 ```cpp
@@ -228,7 +228,7 @@ We should expect the same trend for `RVO/NRVO` and for the Move-Semantic, instea
 
 In this second test we are going to use a fixed number of `items`, and more specifically we are pushing only one single item in the vector, but this time we will increate number of calls to the function. 
 
-First iteration perform `10 Milion calls`, second iteration `20 Milion calls` and so on up to `100 Milion calls`.
+First iteration perform `10 Million calls`, second iteration `20 Million calls` and so on up to `100 Million calls`.
 
 In this test we add also `Reference + Create` and for that we discussed in the first part of this article, we are expeting a perfect match with `RVO/NRVO` timing.
 
@@ -246,6 +246,8 @@ It is really interesting the result for `Reference + clear` where we register up
 What is emerging from collected results is clear and don't let us any doubt on the fact that creating the object all the time we invoke a function is responsible for this huge gap between the first three implementation and the last one.
 
 **Note**: *graph and related data available here [Performances.xlsx](.resources/performances.xlsx).*
+
+**Note**: here the source code [main_test1.cpp](.resources/main_test1.cpp) for [Test 1](#test-1---constant-calls-with-variable-items).
 
 **Note**: here the source code [main_test2.cpp](.resources/main_test2.cpp) for [Test 2](#test-2---constant-items-with-variable-calls).
 
