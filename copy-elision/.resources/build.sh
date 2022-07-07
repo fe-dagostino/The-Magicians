@@ -1,13 +1,13 @@
 #!/bin/bash
-echo g++ -std=c++20 -O3 main.cpp -o gcc_ceVSref
-g++ -std=c++20 -O3 main.cpp -o gcc_ceVSref
+echo g++ -std=c++20 -O3 main_test1.cpp -o gcc_test1
+g++ -std=c++20 -O3 main_test1.cpp -o gcc_test1
 
-echo clang++ -std=c++20 -O3 main.cpp -o clang_ceVSref
-clang++ -std=c++20 -O3 main.cpp -o clang_ceVSref
+echo clang++ -std=c++20 -O3 main_test1.cpp -o clang_test1
+clang++ -std=c++20 -O3 main_test1.cpp -o clang_test1
 
-echo g++ -std=c++20 -O3 main_runtime.cpp -o gcc_rt
-g++ -std=c++20 -O3 main_runtime.cpp -o gcc_rt
+echo g++ -std=c++20 -O3 main_test2.cpp -o gcc_test2
+g++ -std=c++20 -O3 main_test2.cpp -o gcc_test2
 
-echo clang++ -std=c++20 -O3 main_runtime.cpp -o clang_rt
-clang++ -std=c++20 -O3 main_runtime.cpp -o clang_rt
+echo clang++ -std=c++20 -O3 main_test2.cpp -o clang_test2
+clang++ -std=c++20 -O3 main_test2.cpp -o clang_test2
 
