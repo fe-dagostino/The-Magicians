@@ -241,8 +241,9 @@ The first 3 lines are so closer and at least for RVO/NRVO and Move Semantic we h
 - up to **1.47%** better than `RVO/NRVO`
 - up to **3.24%** better than `Move-Semantic`.
 
-It is really interesting the result for `Reference + clear` where we register up to **94%** better performances compared to all other implementations. 
+It is really interesting the result for `Reference + clear` where we register up to **94%** better performances compared to all other implementations. Moreover, don't forget we just used a simple `std::vector` with a relative small size of `24 bytes`, so repeating our tests with larger objects will only increase the gap with other implementations.
 
+What is emerging from collected results is clear and don't let us any doubt on the fact that creating the object all the time we invoke a function is responsible for this huge gap between the first three implementation and the last one.
 
 **Note**: *graph and related data available here [Performances.xlsx](.resources/performances.xlsx).*
 
