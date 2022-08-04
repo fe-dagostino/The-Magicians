@@ -28,5 +28,5 @@ Anyone that would like contributing to "The Magicians" will be more than welcome
 Articles:
 
 - [copy-elision](copy-elision/README.md)  --- *July 2022*
-- [lock-free](https://github.com/fe-dagostino/lock-free/blob/master/pages/common/arena_allocator/README.md) --- *August 2022*
+- [lock-free](lock-free/arena_allocator/README.md) --- *August 2022*
 - [smart pointers?]()--- wip
