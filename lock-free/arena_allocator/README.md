@@ -188,7 +188,7 @@ Note: if someone want to repeat the tests also with the `std::mutex`, the only c
     ...
 ```
 
-### Comparison between all four
+### Comparison between all results
 
 ![All](.resources/compare_4.svg)
 
@@ -199,7 +199,35 @@ Removing `std::mutex` results, we have a graph that is more intelligible and mat
 
 ![All](.resources/compare_3.svg)
 
+Removing one element remaining information scaled up and it is more visible the results with one thread as well as the behaviour for all 3 allocation strategies. 
+* **Spinlock**: we can observe that the trend is growing linearly, so increasing the number of threads the number also generate more collisions increase the time as well;
+* **Lock-Free**: the results in a single thread environment are worst, since the sum of all atomic operations for a single call of `allocate()` or `deallocate()` are comparable to the time required to acquire a `mutex` or to create a "critical section" and to release it, but starting from 4 threads in parallel, we can observe that *lock-free* implementation is performing better than a spin-lock implementation, and the curious fact is that from this point forward performances seems to be not affected from the number of concurrent threads, in fact we have more or less the same results for each run. So as far we can see from these results, a Lock-Free implementation seems perfect for environments with high-contended resources. 
+* **New & Delete**: bizarre results, right? with one single thread is one of the worst but after that it seems to improve the results and is going better and better increasing the number of threads. To understands what is going on, we have do dig a little bit in details in the malloc() implementation and we can find two reasons for those results.
 
+First here a [link](https://sourceware.org/glibc/wiki/MallocInternals) for everyone interested to know more about *malloc* with the explanation on how it works internally. I really hope that this results will help to disrupt the misconceit that new() and delete() are slow, there is an huge amount of work behind this simple, but fundamental, functionality and a lot of research and improvements are still in progress; not perfect for sure, but improving release by release. 
 
+*Please note that with other implementation results can be quite different, and yes in some implementation for `new` and `delete`.* 
+
+Now let's see the two main reason to explain why we have this strange, sorry bizzarre, results on using "`new` and `delete`". 
+
+In the following image there we have the comparison between `new` and `delete` and `std::mutex` that have respectively a time of **1.301s** and **1.344s**, quite closer, right? from this result, seems that `malloc()` internally is using a `mutex` and checking the implementation it is exactly like that.
+
+![New & Delete comapre with mutex](.resources/compare_mutex.svg)
+
+At this point it is really important to remind, that the `benchmarks` have been executed taking the total number of operations as a constant, so this means that we have the following distribution increasing the number of threads.
+
+![New & Delete comapre with mutex](.resources/mt_op_per_thread.png)
+
+And this simple reminder, can help to explain the following graph, in which increasing the number of threads the global time, here presented from the AVG, is going down in clear contrast with the trends observed for all other implementations.
 
 ![New & Delete](.resources/new_delete.svg)
+
+The above results, are real and they are possible only without contended resources, so from our observations seems that `new` & `delete` are acting like in single thread even there are multiple threads operating with those operators. Again the explanation for that is coming from malloc() implementation where in order to avoid or limit the number of resources shared between threads, to each thread is assigned an `arena`, this means that is like each thread have his own `new` and `delete` and depending on the number of total threads such arena isn't shared or better it is used only by one single thread, and if we complete this information with the above table, where increasing the number of threads we also reduce the number of operation per single thread then the graph make perfectly sense.
+
+### Do we need an arena_allocator ?
+
+Will not surprising if someone is asking them self, why do need an arena allocator if `new` and `delete` have such great performances. An arena_allocator is useful in many environments, but as we saw from all the results we must take care to use it in the right manner or we will waste a lot of CPU computational power, as well as energy, obtaining wretched performances. An arena allocator is a `building block` that can have many allocation strategies, helping to resolve issues like `memory fragmentation` and also to obtain a relevant improvement in performances. 
+
+## Thanks for reading
+
+Hope you enjoyed this article, and you find usful information in it.
