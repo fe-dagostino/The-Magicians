@@ -1,4 +1,4 @@
-# [The-Magicians](../README.md): [Lock-Free](https://github.com/fe-dagostino/lock-free)
+# [The-Magicians](https://github.com/fe-dagostino/The-Magicians/blob/master/README.md): [Lock-Free](https://github.com/fe-dagostino/lock-free)
 
 Last update: 05 August 2022
 
