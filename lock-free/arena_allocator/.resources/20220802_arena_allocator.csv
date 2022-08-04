@@ -1,0 +1,6 @@
+"title";"name";"unit";"batch";"elapsed";"error %";"instructions";"branches";"branch misses";"total"
+"benchmark";"Using new and delete";"op";1000000;0.01691719674;0.00208548733949618;233624681.25;53624931.11;537.34;7.63172594
+"benchmark";"Using Lock-Free arena_allocator";"op";1000000;0.02160153664;0.000221081667794292;53000017.67;7000006.41;2.33;9.742172254
+"benchmark";"Using Lock-Free arena_allocator unsafe";"op";1000000;0.02076847386;0.000663170739889459;46000018.47;4000005.2;2.1;9.409344687
+"benchmark";"Using Core arena_allocator";"op";1000000;0.01239737734;0.00923628453304182;186000013.34;43000005.07;7.47;5.674571262
+"benchmark";"Using Core arena_allocator unsafe";"op";1000000;0.00860797549;0.0135313373376209;36000013.45;3000003.12;3.16;3.87906882
