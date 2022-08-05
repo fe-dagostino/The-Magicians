@@ -11,13 +11,12 @@ Despite the title of this repository, it is intended as a collection of articles
 Different articles will be hard to be accepted since in some cases there are years of misinformation to be fought, but hoping in an *open-minded* approach from readers, all together we can avoid a lot of waste in terms of CPU cycles, with the benefits to have performing programs, less power consumption and as direct consequence of this last less impact on the environment since a little contribution can make the difference. 
 
 In different articles we will talk about costs, taking in account all forms of costs and not only the [**Big-O notation**](https://en.wikipedia.org/wiki/Big_O_notation) for time and space complexity. More in details, depending on the specific content for the article we will consider:
-- ***Time Complexity***: 
-- ***Space Complexity***:
-- ***Compile Time***:
+- ***Time Complexity*** 
+- ***Space Complexity***
+- ***Compile Time***
 - ***Execution time***: that in some cases reflect the time complexity, but this is not always true. So Time Complexity and Execution Time can really differs from each other.
-- ***Generated code***:
-- ***Human Cost***:
-
+- ***Generated code***
+- ***Human Cost***
 
 And as it happens in the real life, the best solution most of the time is to find out a compromise between all the five costs listed above.
 
@@ -29,4 +28,7 @@ Articles:
 
 - [copy-elision](copy-elision/README.md)  --- *July 2022*
 - [lock-free](lock-free/arena_allocator/README.md) --- *August 2022*
-- [smart pointers?]()--- wip
+- smart pointers? --- wip
+
+
+[comment]: <> (@todo compete complexoty section)
