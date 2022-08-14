@@ -28,7 +28,7 @@ Articles:
 
 - [copy-elision](copy-elision/README.md)  --- *July 2022*
 - [lock-free](lock-free/arena_allocator/README.md) --- *August 2022*
-- [generic programmig](templates/generic-programming/README.md) --- *August 2022*
+- [templates are funny](templates/templates-are-funny/README.md) --- *August 2022*
 - smart pointers? --- wip
 
 

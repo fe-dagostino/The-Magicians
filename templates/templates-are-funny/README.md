@@ -1,6 +1,6 @@
-# [The-Magicians](../../README.md): generic programmig 
+# [The-Magicians](../../README.md): templates are funny 
 
-Last update: 16 August 2022
+Last update: 14 August 2022
 
 When talking about [templates](https://en.wikipedia.org/wiki/Template_(C++)), in most of the cases, the common opinion is that they are difficult to read, complex to write and debugging it means having a hard time. My personal opinion on this topic is that templates are the funniest part provided by C/C++ standard and continuously enriched with new functionalities. 
 
