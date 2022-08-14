@@ -458,7 +458,7 @@ So basically we have 3 different implementation for get_next():
 2. _next as raw pointer ( second and fourth function in the assembly )
 3. _next as atomic pointer ( fifth function in the assembly )
 
-Leveraging usage of `constexpr` we obtained a method that can work on any specialization, methods can be also more complex for example can lock / unlock in the hypothesis that we have a data structure that potentially can work with a `mutex` as well as without.
+Leveraging usage of `constexpr` we obtained a method that can work on any specialization, methods can be also more complex for example can lock / unlock in the hypothesis that we have a data structure that potentially can work with a `mutex` as well as without, so same base class customized via template parameters to be fully *thread-safe* or *unsafe* all at compile-time and without to affect performances if we are using the unsafe version, no one single instruction more than needed will be produced.
 
 ## Conclusion
 
