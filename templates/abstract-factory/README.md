@@ -396,7 +396,7 @@ The above is just a simple example, but the important part is that we just need 
 
 **Note**: both `abstract_factory` and a more complete example can be found in the lock-free repository [lock-free/include/core/abstract_factory.h](https://github.com/fe-dagostino/lock-free).
 
-*Moreover, following this link on [godbolt](https://godbolt.org/z/Kzxxq59P6) there is a live example to experiment with.*
+*Moreover, following this link on [godbolt](https://godbolt.org/z/Mch6zGTME) there is a live example to experiment with.*
 
 ## Conclusion
 
