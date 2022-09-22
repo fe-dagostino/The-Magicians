@@ -26,9 +26,10 @@ Anyone that would like contributing to "The Magicians" will be more than welcome
 
 Articles:
 
-- [copy-elision](copy-elision/README.md)  --- *July 2022*
-- [lock-free](lock-free/arena_allocator/README.md) --- *August 2022*
-- [templates are funny](templates/templates-are-funny/README.md) --- *August 2022*
+- [Copy-Elision](copy-elision/README.md)  --- *July 2022*
+- [Lock-Free](lock-free/arena_allocator/README.md) --- *August 2022*
+- [Templates are funny](templates/templates-are-funny/README.md) --- *August 2022*
+- [Abstract Factory](templates/abstract-factory/README.md) --- *September 2022*
 - smart pointers? --- wip
 
 
