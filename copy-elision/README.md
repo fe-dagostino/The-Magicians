@@ -214,8 +214,8 @@ constexpr void get_vector_ref( int items, std::vector<int>& out ) noexcept // _r
 
 Here the results with two different views.
 
-|![]([.resources/test_1_graph_1.png](https://github.com/fe-dagostino/The-Magicians/blob/master/copy-elision/.resources/test_1_graph_1.png))|![]([.resources/test_1_graph_2.png](https://github.com/fe-dagostino/The-Magicians/blob/master/copy-elision/.resources/test_1_graph_2.png))|
-|--|--|
+![test_1_graph_1.png](https://github.com/fe-dagostino/The-Magicians/blob/master/copy-elision/.resources/test_1_graph_1.png)
+![test_1_graph_2.png](https://github.com/fe-dagostino/The-Magicians/blob/master/copy-elision/.resources/test_1_graph_2.png)
 
 From the graphics we can see that "Reference + Clear" increase linearly with the number of items, that is quite normal since we have more calls to `push_items()` for the vector, so internal loop inside the function.
 
