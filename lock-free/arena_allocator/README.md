@@ -15,7 +15,7 @@ Let's see how it works and how it is possible to keep allocation and deallocatio
 
 In the following [Figure 1] there is representation for the *arena_allocator*; In this specific example we are considering `chuck_size = 5` since we want to illustrate the mechanism and 5 memory_slot are more than enough for this scope. 
 
-![Figure 1](.resources/arena_allocator_initial.svg)
+![Figure 1](https://github.com/fe-dagostino/The-Magicians/blob/master/lock-free/arena_allocator/.resources/arena_allocator_initial.svg?raw=true)
 
 As we can see in [Figure 1], there are different elements:
 * **MEMORY CHUNK**: in order to avoid massive call to `new` and `delete` there is a single allocation, one for each `chunks`, where the amount of memory is enough to store `chunk_size` items of type `data_t` plus some extra memory required to manage the structure. In fact, the drawback to have better performances, at least with this implementation, is that we need a pointer for each single `memory_slot`, so 32 bits or 64 bits depending on the CPU architecture. Moreover, we need to keep other two pointers, respectively `first` and `last`, used for integrity checks as well as for deallocating the memory once `arena_allocator` will be destroyed.
@@ -190,14 +190,14 @@ Note: if someone want to repeat the tests also with the `std::mutex`, the only c
 
 ### Comparison between all results
 
-![All](.resources/compare_4.svg)
+![All](https://github.com/fe-dagostino/The-Magicians/blob/master/lock-free/arena_allocator/.resources/compare_4.svg?raw=true)
 
 This image, confirm what we have seen before in the first [benchmark](#single-thread-benckmarks) a single thread context, so all implementation show the same performances or better performances than `new` and `operator`, but this is valid only for the 1 thread, since as soon as we move to a multi-thread everything changes.
 What is emerging from this first graph are the results obtained with std::mutex, that on this system leverage on pthread_mutex but I believe that also with other compilers and in other OS we can experiment the same type of degradation for the total time that reached up to 67 seconds to perform 100 Millions operations total, compared with the first result of 1.3 seconds required in a single thread context, with 16 threads we have about **67-1.3 = 65.7 seconds** lost from all threads on `waiting` to capture the `mutex`.   
 
 Removing `std::mutex` results, we have a graph that is more intelligible and matches with the three tables presented above.
 
-![All](.resources/compare_3.svg)
+![All](https://github.com/fe-dagostino/The-Magicians/blob/master/lock-free/arena_allocator/.resources/compare_3.svg?raw=true)
 
 Removing one element remaining information scaled up and it is more visible the results with one thread as well as the behaviour for all 3 allocation strategies. 
 * **Spinlock**: we can observe that the trend is growing linearly, so increasing the number of threads the number also generate more collisions increase the time as well;
@@ -212,15 +212,15 @@ Now let's see the two main reason to explain why we have this strange, sorry biz
 
 In the following image there we have the comparison between `new` and `delete` and `std::mutex` that have respectively a time of **1.301s** and **1.344s**, quite closer, right? from this result, seems that `malloc()` internally is using a `mutex` and checking the implementation it is exactly like that.
 
-![New & Delete comapre with mutex](.resources/compare_mutex.svg)
+![New & Delete comapre with mutex](https://github.com/fe-dagostino/The-Magicians/blob/master/lock-free/arena_allocator/.resources/compare_mutex.svg?raw=true)
 
 At this point it is really important to remind, that the `benchmarks` have been executed taking the total number of operations as a constant, so this means that we have the following distribution increasing the number of threads.
 
-![New & Delete comapre with mutex](.resources/mt_op_per_thread.png)
+![New & Delete comapre with mutex](https://github.com/fe-dagostino/The-Magicians/blob/master/lock-free/arena_allocator/.resources/mt_op_per_thread.png?raw=true)
 
 And this simple reminder, can help to explain the following graph, in which increasing the number of threads the global time, here presented from the AVG, is going down in clear contrast with the trends observed for all other implementations.
 
-![New & Delete](.resources/new_delete.svg)
+![New & Delete](https://github.com/fe-dagostino/The-Magicians/blob/master/lock-free/arena_allocator/.resources/new_delete.svg?raw=true)
 
 The above results, are real and they are possible only without contended resources, so from our observations seems that `new` & `delete` are acting like in single thread even there are multiple threads operating with those operators. Again the explanation for that is coming from malloc() implementation where in order to avoid or limit the number of resources shared between threads, to each thread is assigned an `arena`, this means that is like each thread have his own `new` and `delete` and depending on the number of total threads such arena isn't shared or better it is used only by one single thread, and if we complete this information with the above table, where increasing the number of threads we also reduce the number of operation per single thread then the graph make perfectly sense.
 
