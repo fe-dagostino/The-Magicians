@@ -234,7 +234,7 @@ In this test we add also `Reference + Create` and for that we discussed in the f
 
 Here the results with two different views.
 
-|![](.resources/test_2_graph_1.png)|![](.resources/test_2_graph_2.png)|
+|![test_2_graph_1.png](https://github.com/fe-dagostino/The-Magicians/blob/master/copy-elision/.resources/test_2_graph_1.png?raw=true)|![test_2_graph_2.png](https://github.com/fe-dagostino/The-Magicians/blob/master/copy-elision/.resources/test_2_graph_2.png?raw=true)|
 |--|--|
 
 The first 3 lines are so closer and at least for RVO/NRVO and Move Semantic we have a confirmation on what we have seen also in [Test 1](#test-1---constant-calls-with-variable-items); The purple line related to `Reference + Create` show that we have some improvements increasing the number of calls:
